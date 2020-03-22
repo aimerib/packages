@@ -11,4 +11,4 @@
 .pixiebox
 .byebug_history
 .DS_Store
-./build/
+/.build/
