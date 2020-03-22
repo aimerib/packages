@@ -1,0 +1,23 @@
+---
+version: '2.4'
+volumes:
+  db-data:
+    external: false
+  bundle-data:
+    external: false
+services:
+  dev:
+    build: "."
+    entrypoint: ".pixiebox/start"
+    volumes:
+    - ".:/var/www:cached"
+    volumes_from:
+    - bundle
+    hostname: pixiebox
+    ports:
+    - 9292:9292
+    - 3000:3000
+  bundle:
+    image: busybox
+    volumes:
+    - bundle-data:/usr/local/bundle:cached

@@ -1,0 +1,46 @@
+# pixiebox for use ruby and nodejs
+#
+# VERSION               0.1.0
+
+# Change this for different versions of ruby (see https://hub.docker.com/_/ruby/)
+# FROM ruby:2.2-slim
+# FROM ruby:2.3-slim
+
+FROM ruby:slim-buster
+
+
+ENV APP_HOME /var/www
+ENV PATH $APP_HOME/bin:$PATH
+
+# silence deb warnings
+ENV DEBIAN_FRONTEND noninteractive
+ENV HOSTNAME pixiebox
+
+# do install here
+RUN mkdir -p /tmp
+WORKDIR /tmp
+
+# add repository software
+RUN apt-get update
+RUN apt-get install -y build-essential software-properties-common tzdata wget curl gnupg2 libcurl4-gnutls-dev
+
+## Languages
+
+# nodejs
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get install -y nodejs
+
+# utils
+RUN apt-get install -y nano git
+
+# make nano work
+RUN echo "export TERM=xterm" >> /etc/bash.bashrc
+
+# working dir
+WORKDIR $APP_HOME
+
+# add gemfile
+ONBUILD ADD Gemfile* $APP_HOME/
+
+# hook up source
+ONBUILD ADD . $APP_HOME

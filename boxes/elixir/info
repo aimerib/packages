@@ -1,0 +1,18 @@
+To create new phoenix project:
+
+$ pixiebox add postgres
+$ mix phx.new . --app helloworld
+
+Configure database:
+
+config/dev.exs:
+--------------------------------
+config :hello, Hello.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "pixiebox",
+  password: "pixiebox",
+  database: "helloworld_dev",
+  hostname: "postgres",
+  pool_size: 10
+--------------------------------
+

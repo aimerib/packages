@@ -1,0 +1,26 @@
+---
+version: '2.4'
+volumes:
+  db-data:
+    external: false
+services:
+  dev:
+    build: "."
+    entrypoint: ".pixiebox/start"
+    volumes:
+    - ".:/var/www:cached"
+    hostname: pixiebox
+    environment:
+      MIX_ENV: dev
+    ports:
+    - 80:4000
+    - 4000:4000
+  test:
+    build: "."
+    entrypoint: ".pixiebox/start"
+    volumes:
+    - ".:/var/www:cached"
+    environment:
+      MIX_ENV: test
+    hostname: pixiebox_test
+
